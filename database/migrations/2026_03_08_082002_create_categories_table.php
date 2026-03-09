@@ -1,3 +1,4 @@
+//2026_03_08_082002_create_categories_table.php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
