@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 // Import Gate untuk otorisasi
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -24,20 +26,7 @@ class ProductController extends Controller
         return view('product.create', compact('users'));
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'qty' => 'required|integer', 
-            'price' => 'required|numeric',
-            'user_id' => 'required|exists:users,id',
-        ]);
-
-        Product::create($validated);
-
-        return redirect()->route('product.index')->with('success', 'Product created successfully.');
-    }
-
+   
     public function show(Product $product)
     {
         return view('product.view', compact('product'));
@@ -52,22 +41,7 @@ class ProductController extends Controller
         return view('product.edit', compact('product', 'users'));
     }
 
-    public function update(Request $request, Product $product)
-    {
-        // 🔒 Cek izin edit
-        Gate::authorize('update', $product);
-
-        $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'qty' => 'sometimes|integer', // REVISI: Ganti quantity ke qty
-            'price' => 'sometimes|numeric',
-            'user_id' => 'sometimes|exists:users,id',
-        ]);
-
-        $product->update($validated);
-
-        return redirect()->route('product.index')->with('success', 'Product updated successfully.');
-    }
+  
 
     public function destroy(Product $product)
     {
@@ -78,4 +52,21 @@ class ProductController extends Controller
 
         return redirect()->route('product.index')->with('success', 'Product berhasil dihapus');
     }
+
+    public function store(StoreProductRequest $request) // Pakai StoreProductRequest
+{
+    // Data otomatis tervalidasi sebelum masuk ke sini
+    Product::create($request->validated());
+
+    return redirect()->route('product.index')->with('success', 'Produk berhasil ditambah!');
+}
+
+public function update(UpdateProductRequest $request, Product $product) // Pakai UpdateProductRequest
+{
+    Gate::authorize('update', $product);
+
+    $product->update($request->validated());
+
+    return redirect()->route('product.index')->with('success', 'Produk berhasil diupdate!');
+}
 }
