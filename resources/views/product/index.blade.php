@@ -4,7 +4,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    {{-- Header --}}
+                    {{-- Header dengan Component x-add-product --}}
                     <div class="flex items-center justify-between mb-6">
                         <div>
                             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
@@ -15,41 +15,35 @@
                             </p>
                         </div>
 
-                        <a href="{{ route('product.create') }}"
-                           class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition duration-150 shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M12 4v16m8-8H4"/>
-                            </svg>
-                            Add Product
-                        </a>
+                        {{-- Tombol Add Product menggunakan Component --}}
+                        @can('manage-product')
+                            <x-add-product :url="route('product.create')" :name="'Product'" />
+                        @endcan
                     </div>
 
                     {{-- Flash Message dengan Tombol Close (X) --}}
-@if(session('success'))
-    <div x-data="{ show: true }" 
-         x-show="show" 
-         x-transition:leave="transition ease-in duration-300"
-         x-transition:leave-start="opacity-100 scale-100"
-         x-transition:leave-end="opacity-0 scale-95"
-         class="mb-6 px-4 py-3 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-sm flex items-center justify-between" 
-         role="alert">
-        
-        <div class="flex items-center gap-2">
-            <span class="text-lg">✅</span>
-            <div>
-                <strong class="font-bold">Mantap!</strong>
-                <span class="block sm:inline">{{ session('success') }}</span>
-            </div>
-        </div>
+                    @if(session('success'))
+                        <div x-data="{ show: true }" 
+                             x-show="show" 
+                             x-transition:leave="transition ease-in duration-300"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="mb-6 px-4 py-3 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-sm flex items-center justify-between" 
+                             role="alert">
+                            
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg">✅</span>
+                                <div>
+                                    <strong class="font-bold">Mantap!</strong>
+                                    <span class="block sm:inline">{{ session('success') }}</span>
+                                </div>
+                            </div>
 
-        {{-- Tombol OK / Close --}}
-        <button @click="show = false" class="text-green-700 hover:text-green-900 font-bold px-2 py-1 rounded-md hover:bg-green-200 transition">
-            OK
-        </button>
-    </div>
-@endif
+                            <button @click="show = false" class="text-green-700 hover:text-green-900 font-bold px-2 py-1 rounded-md hover:bg-green-200 transition">
+                                OK
+                            </button>
+                        </div>
+                    @endif
 
                     {{-- Table --}}
                     <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
@@ -75,7 +69,6 @@
                                         </td>
 
                                         <td class="px-6 py-4">
-                                            {{-- Pakai $product->qty --}}
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                                 {{ $product->qty > 0 ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
                                                                      : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300' }}">
@@ -93,7 +86,6 @@
 
                                         <td class="px-6 py-4">
                                             <div class="flex items-center justify-center gap-2">
-
                                                 {{-- View --}}
                                                 <a href="{{ route('product.show', $product->id) }}"
                                                    class="p-1.5 rounded-md text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition"
@@ -123,7 +115,6 @@
                                                     </button>
                                                 </form>
                                                 @endcan
-
                                             </div>
                                         </td>
                                     </tr>

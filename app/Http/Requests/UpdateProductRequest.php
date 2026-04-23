@@ -19,7 +19,7 @@ public function rules(): array
     return [
         'name'     => 'sometimes|string|min:5|max:255',
         'qty'      => 'sometimes|integer|min:0',
-        'price'    => 'sometimes|numeric|min:0',
+        'price'    => 'sometimes|numeric|min:10000',
         'user_id'  => 'sometimes|exists:users,id',
     ];
 }
