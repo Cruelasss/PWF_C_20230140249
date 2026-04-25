@@ -1,4 +1,4 @@
-//2026_03_08_081942_create_products_table.php
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;

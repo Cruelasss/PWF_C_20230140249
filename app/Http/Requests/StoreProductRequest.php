@@ -21,7 +21,7 @@ public function rules(): array
         'qty' => 'required|numeric',
         'price' => 'required|numeric',
         'user_id' => 'required|exists:users,id',
-        'category_id' => 'required|exists:categories,id', // WAJIB ADA BARIS INI
+        'category_id' => 'required|exists:categories,id', // Validasi untuk category_id
     ];
 }
 public function messages(): array
@@ -31,6 +31,7 @@ public function messages(): array
         'name.min' => 'Nama produk kependekan, minimal 5 huruf.',
         'qty.required' => 'Jumlah stok wajib diisi.',
         'price.numeric' => 'Harga harus berupa angka.',
+        'category_id.exists' => 'Kategori yang dipilih tidak valid.',
     ];
 }
 
