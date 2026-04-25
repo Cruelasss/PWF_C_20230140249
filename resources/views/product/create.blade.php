@@ -31,17 +31,36 @@
 
                         {{-- Name --}}
                         <div>
-                            <label for="name"
-                                   class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                 Product Name <span class="text-red-500">*</span>
                             </label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}"
                                    placeholder="e.g. Wireless Headphones"
                                    class="w-full px-4 py-2.5 rounded-lg border text-sm
                                    {{ $errors->has('name') ? 'border-red-400 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700' }}
-                                   text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500
-                                   focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                                   text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
                             @error('name')
+                                <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Category (SUDAH DIRAPIKAN) --}}
+                        <div>
+                            <label for="category_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Category <span class="text-red-500">*</span>
+                            </label>
+                            <select id="category_id" name="category_id"
+                                    class="w-full px-4 py-2.5 rounded-lg border text-sm
+                                    {{ $errors->has('category_id') ? 'border-red-400 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700' }}
+                                    text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                <option value="">-- Pilih Kategori --</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
                                 <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
@@ -49,33 +68,28 @@
                         {{-- Qty & Price --}}
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label for="qty"
-                                       class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label for="qty" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Quantity <span class="text-red-500">*</span>
                                 </label>
-                                {{-- REVISI: Name dan ID diganti jadi 'qty' --}}
                                 <input type="number" id="qty" name="qty" value="{{ old('qty') }}"
                                        placeholder="0" min="0"
                                        class="w-full px-4 py-2.5 rounded-lg border text-sm
                                        {{ $errors->has('qty') ? 'border-red-400 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700' }}
-                                       text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500
-                                       focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                                       text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
                                 @error('qty')
                                     <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <div>
-                                <label for="price"
-                                       class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label for="price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Price (Rp) <span class="text-red-500">*</span>
                                 </label>
                                 <input type="number" id="price" name="price" value="{{ old('price') }}"
                                        placeholder="0" min="0" step="0.01"
                                        class="w-full px-4 py-2.5 rounded-lg border text-sm
                                        {{ $errors->has('price') ? 'border-red-400 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700' }}
-                                       text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500
-                                       focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                                       text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
                                 @error('price')
                                     <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
                                 @enderror
@@ -84,19 +98,16 @@
 
                         {{-- Owner --}}
                         <div>
-                            <label for="user_id"
-                                   class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label for="user_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                 Owner <span class="text-red-500">*</span>
                             </label>
                             <select id="user_id" name="user_id"
                                     class="w-full px-4 py-2.5 rounded-lg border text-sm
                                     {{ $errors->has('user_id') ? 'border-red-400 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700' }}
-                                    text-gray-900 dark:text-gray-100
-                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                                    text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
                                 <option value="">Select Owner</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}"
-                                        {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                    <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
                                         {{ $user->name }}
                                     </option>
                                 @endforeach
@@ -118,16 +129,6 @@
                                 Save Product
                             </button>
                         </div>
-                        <div class="mb-4">
-    <label class="block text-sm font-medium mb-1">Kategori</label>
-    <select name="category_id" class="w-full bg-gray-700 border-none rounded-md">
-        <option value="">-- Pilih Kategori --</option>
-        @foreach($categories as $category)
-            <option value="{{ $category->id }}">{{ $category->name }}</option>
-        @endforeach
-    </select>
-</div>
-
                     </form>
 
                 </div>

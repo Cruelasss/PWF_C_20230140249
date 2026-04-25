@@ -1,3 +1,4 @@
+//2026_03_08_082002_create_categories_table.php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -8,14 +9,16 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     */public function up(): void
+     */
+   public function up(): void
 {
-    Schema::create('categories', function (Blueprint $table) {
-        $table->id();
-        $table->string('name')->unique();
-        $table->timestamps();
-    });
+   Schema::create('categories', function (Blueprint $table) {
+    $table->id();
+    $table->string('name')->unique();
+    $table->timestamps();
+});
 }
+
     /**
      * Reverse the migrations.
      */

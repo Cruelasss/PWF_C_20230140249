@@ -16,7 +16,13 @@ return new class extends Migration
         $table->string('name');
         $table->integer('qty');
         $table->decimal('price', 10, 2);
+        
+        // Relasi ke User (Pemilik Produk)
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        
+        // TAMBAHKAN INI: Relasi ke Category
+$table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+        
         $table->timestamps();
     });
 }

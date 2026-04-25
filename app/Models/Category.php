@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    //protected $fillable = ['name'];
+    // Tambahkan baris sakti ini bolo!
+    protected $fillable = ['name'];
 
-public function products() {
-    return $this->hasMany(Product::class);
-}
+    // Relasi ke produk (pastikan ini juga ada)
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

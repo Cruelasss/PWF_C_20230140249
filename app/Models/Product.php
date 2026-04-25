@@ -20,6 +20,7 @@ class Product extends Model
     'qty',    // Pastikan ini 'qty' sesuai screenshot DB
     'price',
     'user_id',
+    'category_id'
 ];
     // Jika kamu punya relasi ke User, biasanya ada di bawah sini
     public function user()
